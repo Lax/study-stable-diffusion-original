@@ -27,5 +27,5 @@ services:
       - HF_HUB_OFFLINE=1
       - TRANSFORMERS_OFFLINE=1
     shm_size: "16g"
-    restart: unless-stopped
+    restart: no
     runtime: nvidia

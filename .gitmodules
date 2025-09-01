@@ -1,0 +1,3 @@
+[submodule "src/stable-diffusion"]
+	path = src/stable-diffusion
+	url = https://github.com/CompVis/stable-diffusion

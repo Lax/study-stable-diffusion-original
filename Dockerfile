@@ -1,4 +1,4 @@
-FROM nvcr.io/nvidia/pytorch:25.03-py3
+FROM nvcr.io/nvidia/pytorch:25.08-py3
 
 WORKDIR /workspace
 
@@ -35,14 +35,14 @@ RUN grep -rl 'torch.load(ckpt, map_location="cpu")' scripts | xargs sed -i 's/to
 # ------------------------------
 # 4. Install environment deps
 # ------------------------------
-# Force Python 3.10 for compatibility (if environment.yaml requests 3.13, override)
 RUN --mount=type=cache,target=/var/cache/apt \
     --mount=type=cache,target=/var/lib/apt \
     --mount=type=cache,target=/root/.cache/pip \
     --mount=type=cache,target=/root/.cache/huggingface \
     apt-get update && apt-get install -y --no-install-recommends \
-    libglib2.0-0 libsm6 libxext6 libxrender1 && \
+    libglib2.0-0 libsm6 libxext6 libxrender1 libgl1 && \
     pip install \
+        numpy==1.26.4 \
         omegaconf==2.1.1 \
         invisible-watermark \
         pytorch-lightning==1.4.2 \

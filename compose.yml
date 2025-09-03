@@ -4,11 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - http_proxy=http://172.17.0.1:64540
         - https_proxy=http://172.17.0.1:64540
-        - all_proxy=socks5://172.17.0.1:64540
-        - HF_HOME=/data/cache/huggingface
-        - HF_ENDPOINT=https://hf-mirror.com
     container_name: stable-diffusion
     volumes:
       - ./models:/workspace/stable-diffusion-main/models
@@ -16,16 +12,17 @@ services:
       - ./models/CompVis:/workspace/stable-diffusion-main/CompVis
       - ./outputs:/workspace/stable-diffusion-main/outputs
       - ./cache/huggingface:/data/cache/huggingface
+      - ./cache/transformers:/root/.cache/huggingface/transformers
       - ./cache/torch:/root/.cache/torch
     environment:
       - http_proxy=http://172.17.0.1:64540
       - https_proxy=http://172.17.0.1:64540
       - all_proxy=socks5://172.17.0.1:64540
       - HF_HOME=/data/cache/huggingface
-      - HF_HUB_URL=https://hf-mirror.com
       - HF_ENDPOINT=https://hf-mirror.com
       - HF_HUB_OFFLINE=1
       - TRANSFORMERS_OFFLINE=1
+      - PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
     shm_size: "16g"
     restart: no
     runtime: nvidia
